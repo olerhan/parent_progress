@@ -7,6 +7,9 @@ topics:
   - indicator
   - tracking
   - management
+  - fictional
+  - rational
+  - manual
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
