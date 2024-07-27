@@ -1,5 +1,5 @@
 name: parent_progress
-description: "This package offers a solution for managing and tracking progress across multiple tasks with three main classes: FictionalProgress, RationalProgress, and ParentProgress. It allows each child progress to independently track and contribute to an aggregated parent progress, using ValueNotifier<int> for dynamic updates and UI integration. Ideal for complex progress management in modular applications."
+description: "This package offers a solution for managing and tracking progress across multiple tasks with three main classes: FictionalProgress, RationalProgress, and ParentProgress."
 version: 0.0.1
 repository: https://github.com/olerhan/parent_progress.git
 topics:

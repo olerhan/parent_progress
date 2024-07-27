@@ -1,6 +1,6 @@
 # Parent Progress
 
-This package provides a robust framework for managing and tracking progress across multiple tasks or operations in Flutter applications. It features three main classes: `FictionalProgress`, `RationalProgress`, and `ParentProgress`, designed to handle complex progress tracking scenarios.
+This package offers a solution for managing and tracking progress across multiple tasks with three main classes: `FictionalProgress`, `RationalProgress`, and `ParentProgress`. It allows each child progress to independently track and contribute to an aggregated parent progress, using `ValueNotifier<int>` for dynamic updates and UI integration. Ideal for complex progress management in modular applications.
 
 ## Features
 
