@@ -1,3 +1,14 @@
+<p align="center" >
+  <strong>The missing piece for your progress indicators.</strong>
+  <br />
+  <br />
+  <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/parent_progress?color=blue" /></a>
+  <a href="https://github.com/olerhan/parent_progress/actions/workflows/flutter_ci.yml"><img src="https://github.com/olerhan/parent_progress/actions/workflows/flutter_ci.yml/badge.svg" /></a>
+  <a href="https://github.com/ReinBentdal/styled_widget"><img src="https://img.shields.io/github/stars/olerhan/parent_progress" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
+  <br />
+</p>
+
 # Parent Progress
 
 This package offers a solution for managing and tracking progress across multiple tasks with three main classes: `FictionalProgress`, `RationalProgress`, and `ParentProgress`. It allows each child progress to independently track and contribute to an aggregated parent progress, using `ValueNotifier<int>` for dynamic updates and UI integration. Ideal for complex progress management in modular applications.
