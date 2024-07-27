@@ -1,10 +1,10 @@
 <p align="center" >
-  <strong>The missing piece for your progress indicators.</strong>
+  <strong>The missing piece for your Flutter progress indicators.</strong>
   <br />
   <br />
   <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/parent_progress?color=blue" /></a>
   <a href="https://github.com/olerhan/parent_progress/actions/workflows/flutter_ci.yml"><img src="https://github.com/olerhan/parent_progress/actions/workflows/flutter_ci.yml/badge.svg" /></a>
-  <a href="https://github.com/ReinBentdal/styled_widget"><img src="https://img.shields.io/github/stars/olerhan/parent_progress" /></a>
+  <a href="https://github.com/olerhan/parent_progress"><img src="https://img.shields.io/github/stars/olerhan/parent_progress" /></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
   <br />
 </p>
