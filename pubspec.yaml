@@ -1,0 +1,17 @@
+name: parent_progress
+description: "This package provides a robust solution for managing and tracking progress across multiple tasks or operations. It includes three main classes: `FictionalProgress`, `RationalProgress`, and `ParentProgress`. Each child progress can independently track progress and contribute to an overall parent progress, which aggregates these contributions in a weighted manner. This architecture is particularly useful for applications requiring complex progress management across various components or modules, utilizing `ValueNotifier<int>` for dynamic updates and seamless UI integration."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
