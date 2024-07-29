@@ -1,15 +1,15 @@
-## 0.1.0
+## 0.1.1
 
-* RationalProgress sınıfında smoothUpdateInterval default değeri 200 den 50 'ye güncellendi.
-* RationalProgress sınıfına isShowDebugSmoothUpdater seçeneği eklendi.
-* RationalProgress sınıfında her _smoothUpdateTimer döngüsündeki debug içeriği "Current Percentage" ifadesi "Smoother Percentage" olarak güncellendi.
-* example dizininde örnek proje eklendi.
-* FictionalProgress sınıfında processingRatePerS ve updateIntervalMs değerinin sınıf örneği üzerinden değiştirilmesi sağlandı.
-* FictionalProgress sınıfına isShowDebugPeriodicUpdate seçeneği eklendi.
-* FictionalProgress sınıfına processedSizeNotifier eklendi.
-* FictionalProgress sizes getter'ı ve setUpdateIntervalMs setter'ı eklendi.
-* Tüm sınıfları içine alan ChildProgress soyut sınıfı yaratıldı. percentageNotifier ve uniqueName parametreleri buradan yönetilecek
-* Parent Progress notifier listesi yerine artık children adında ChildProgress türünden liste alacak.
+* The smoothUpdateInterval default value in the RationalProgress class has been updated from 200 to 50.
+* The isShowDebugSmoothUpdater option has been added to the RationalProgress class.
+* The debug content in each _smoothUpdateTimer loop in the RationalProgress class has been updated from "Current Percentage" to "Smoother Percentage".
+* An example project has been added to the example directory.
+* The values of processingRatePerS and updateIntervalMs in the FictionalProgress class can now be changed through the class instance.
+* The isShowDebugPeriodicUpdate option has been added to the FictionalProgress class.
+* The processedSizeNotifier has been added to the FictionalProgress class.
+* The sizes getter and setUpdateIntervalMs setter have been added to the FictionalProgress class.
+* An abstract ChildProgress class encompassing all classes has been created. The percentageNotifier and uniqueName parameters will be managed from here.
+* Instead of a notifier list, the ParentProgress class will now take a list of type ChildProgress called children.
 
 ## 0.0.1
 
