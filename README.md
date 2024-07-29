@@ -60,7 +60,7 @@ print("Current progress: ${progress.getCurrentPercentage}%");
 ```dart
 // Create individual progresses
 FictionalProgress child1 = FictionalProgress([50, 50]);
-FictionalProgress child2 = FictionalProgress([30, 70]);
+RationalProgress child2 = RationalProgress(totalWork: 100);
 
 // List of child and their corresponding weights
 List<ChildProgress> children = [child1, child2];
@@ -71,10 +71,14 @@ ParentProgress parentProgress = ParentProgress(children, weights);
 
 // Example to update and retrieve total progress
 child1.finishProgressUpToIndexLevel(processIndexLevel: 0, processingRatePerS: 10, updateIntervalMs: 100);
-child2.finishProgressUpToIndexLevel(processIndexLevel: 1, processingRatePerS: 20, updateIntervalMs: 200);
-print("Total aggregated progress: ${parentProgress.totalPercentageNotifier.value}%");
+child2.currentWorkDone(100);
+print("Total aggregated progress: ${parentProgress.percentageNotifier.value}%");
 ```
-"For a more detailed example, please check the example directory on GitHub."
+**For detailed demonstrations and usage scenarios, visit the examples section on our pub.dev page.**
+
+## Support
+
+We hope you find this package useful! If you do, please consider giving it a **like on [pub.dev](https://pub.dev/packages/parent_progress)** and starring it on [GitHub](https://github.com/olerhan/parent_progress) to help others discover it. Your support greatly encourages the maintainers to continue developing and improving this package.
 
 ## Contributing
 

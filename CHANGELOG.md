@@ -1,3 +1,9 @@
+## 0.1.5
+
+* Added setSmoothUpdateInterval setter in the RationalProgress class.
+* Descriptions added or updated to improve understanding of your code.
+* Example project recompiled under a single main.dart.
+
 ## 0.1.0
 
 * The smoothUpdateInterval default value in the RationalProgress class has been updated from 200 to 50.

@@ -1,16 +1,20 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:parent_progress/src/child_progress.dart';
-
 import 'debug_helpers.dart';
 
-/// A class that simulates progress. This is not a real progress tracker,
-/// but rather an estimation tool that simulates progress based on predefined sizes and rates.
+/// A class that simulates progress for tasks or processes that do not have real-time
+/// progress tracking capabilities. This is particularly useful in scenarios where progress
+/// needs to be demonstrated for educational purposes, simulations, or software testing.
 ///
-/// This class manages progress calculation and notifies listeners about the
-/// current progress using a [ValueNotifier]. It uses a list of sizes to simulate
-/// the progress of data processing over time without actually processing any data.
+/// This class uses a list of predefined sizes to represent stages or checkpoints in a process.
+/// Each size corresponds to a segment of work or a phase in the simulated task. The progress
+/// is estimated based on these sizes and a specified rate of processing, allowing for a
+/// visual representation of progress without actual data manipulation.
+///
+/// Progress is managed and communicated through [ValueNotifier], which allows other parts of
+/// an application to react to changes in progress. This makes it ideal for use in user interfaces
+/// that require feedback on simulated operations.
 class FictionalProgress extends ChildProgress {
   int _percentage = 0;
   final List<int>
@@ -103,7 +107,8 @@ class FictionalProgress extends ChildProgress {
     _completer = null;
   }
 
-  /// Starts the timer to simulate the progress.
+  /// Starts the timer to manage smooth progress updates. This method schedules periodic updates
+  /// to simulate progress based on the predefined sizes and processing rate.
   void _startTimer() {
     _timer = Timer.periodic(Duration(milliseconds: _updateIntervalMs), (timer) {
       if (_processedSize < _targetSize) {
@@ -133,16 +138,15 @@ class FictionalProgress extends ChildProgress {
     _startTimer();
   }
 
-  /// Stops the timer.
+  /// Stops the active timer to halt progress updates. This is typically called when the progress
+  /// reaches its target or when resetting the progress.
   void _stopTimer() {
     _timer?.cancel();
     _timer = null;
   }
 
-  /// Resets the progress and optionally initializes new sizes.
-  ///
-  /// If [newSizes] is provided, it will replace the current sizes and
-  /// reinitialize the total size.
+  /// Resets the simulated progress to zero and can reinitialize with [newSizes] if provided.
+  /// This method effectively restarts the simulation from scratch.
   void resetProgress({List<int>? newSizes}) {
     _stopTimer(); // Cancel the previous timer
     _completer?.complete();
