@@ -1,4 +1,4 @@
-## 0.1.1
+## 0.1.0
 
 * The smoothUpdateInterval default value in the RationalProgress class has been updated from 200 to 50.
 * The isShowDebugSmoothUpdater option has been added to the RationalProgress class.
