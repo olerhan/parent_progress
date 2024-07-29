@@ -1,20 +1,19 @@
-import 'fictional_progress.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:parent_progress/src/child_progress.dart';
+
 import 'debug_helpers.dart';
 
 /// A class that aggregates multiple progress progresses and calculates a weighted total progress.
 /// This class uses `_flexFactors` to determine the weight of each child progress's contribution to the total progress.
-class ParentProgress {
+class ParentProgress extends ChildProgress {
   int _percentage = 0;
   final List<int>
       _flexFactors; // Weights for each child progress's contribution to the total.
+  final List<ChildProgress> _children;
   final List<ValueNotifier<int>>
       _slices; // Child progresses' percentage notifiers.
   final List<double>
-      _currentProgress; // Calculated progress contributions from each child.
-  ValueNotifier<int>
-      totalPercentageNotifier; // Notifies the total calculated progress.
-  String? uniqueName;
+      _progressWeights; // Calculated progress contributions from each child.
   final List<VoidCallback> _listeners =
       []; // List to store listeners for cleanup.
 
@@ -24,18 +23,24 @@ class ParentProgress {
   /// The `percentageNotifiers` list should include ValueNotifier<int> from each child progress,
   /// and `flexFactors` determines the importance or weight of each child's progress.
   ParentProgress(
-      List<ValueNotifier<int>> percentageNotifiers, List<int> flexFactors,
-      {this.uniqueName})
-      : _flexFactors = flexFactors,
-        _slices = percentageNotifiers,
-        totalPercentageNotifier = ValueNotifier<int>(0),
-        _currentProgress = List<double>.filled(flexFactors.length, 0.0) {
+    List<ChildProgress> children,
+    List<int> flexFactors, {
+    super.uniqueName,
+  })  : _flexFactors = flexFactors,
+        _children = children,
+        _slices = children.map((child) => child.percentageNotifier).toList(),
+        _progressWeights = List<double>.filled(flexFactors.length, 0.0) {
     if (_slices.length != flexFactors.length) {
       throw ArgumentError(
           '${uniqueName != null ? '${uniqueName!}: ' : ''}Length of percentageNotifiers must match length of flexFactors');
     }
     _initializeListeners();
   }
+
+  List<int> get getFlexFactors => _flexFactors;
+  List<ChildProgress> get getChildren => _children;
+  List<ValueNotifier<int>> get getSlices => _slices;
+  List<double> get getProgressWeights => _progressWeights;
 
   /// Sets up listeners on each child progress's ValueNotifier to update the parent progress.
   void _initializeListeners() {
@@ -61,14 +66,14 @@ class ParentProgress {
 
     int totalFlex = _flexFactors.reduce((a, b) => a + b);
     double slicePercentage = (_flexFactors[sliceIndex] / totalFlex) * 100;
-    _currentProgress[sliceIndex] = (newPercentage / 100) * slicePercentage;
+    _progressWeights[sliceIndex] = (newPercentage / 100) * slicePercentage;
     _updateParentProgress();
   }
 
   /// Aggregates all child contributions and updates the total percentage.
   void _updateParentProgress() {
-    _percentage = _currentProgress.reduce((a, b) => a + b).round();
-    totalPercentageNotifier.value = _percentage;
+    _percentage = _progressWeights.reduce((a, b) => a + b).round();
+    percentageNotifier.value = _percentage;
     printDebugInfo(
         "${uniqueName != null ? '${uniqueName!}: ' : ''}Parent percentage updated: $_percentage");
   }
@@ -78,32 +83,8 @@ class ParentProgress {
     for (int i = 0; i < _slices.length; i++) {
       _slices[i].removeListener(_listeners[i]);
     }
-    totalPercentageNotifier.dispose();
+    percentageNotifier.dispose();
     printDebugInfo(
         "${uniqueName != null ? '${uniqueName!}: ' : ''}ParentProgress disposed.");
   }
-}
-
-void main() {
-  // Example usage
-  FictionalProgress fictional1 =
-      FictionalProgress([8, 2], uniqueName: 'fictional1');
-
-  FictionalProgress fictional2 =
-      FictionalProgress([8, 2], uniqueName: 'fictional2');
-
-  ParentProgress(
-      [fictional1.percentageNotifier, fictional2.percentageNotifier], [1, 1]);
-
-  fictional1.finishProgressUpToIndexLevel(
-      processIndexLevel: 0, processingRatePerS: 1, updateIntervalMs: 500);
-  Future.delayed(const Duration(seconds: 5), () {
-    fictional1.finishProgressUpToIndexLevel(
-        processIndexLevel: 0, processingRatePerS: 5, updateIntervalMs: 30);
-  });
-
-  Future.delayed(const Duration(seconds: 20), () {
-    fictional1.finishProgressUpToIndexLevel(
-        processIndexLevel: 1, processingRatePerS: 1, updateIntervalMs: 1000);
-  });
 }

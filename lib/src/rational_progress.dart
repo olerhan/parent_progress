@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
+import 'package:parent_progress/src/child_progress.dart';
 import 'debug_helpers.dart';
 
 /// A class that tracks and notifies the progress of a task based on the work done compared to the total work.
 /// It uses percentage values to represent progress and can handle both byte-level progress and other units of work.
-class RationalProgress {
+class RationalProgress extends ChildProgress {
   double _totalWork;
   double _currentWork = 0;
   double _currentPercentage = 0;
   double _targetPercentage = 0;
   Timer? _smoothUpdateTimer;
-  final ValueNotifier<int> percentageNotifier;
-  String? uniqueName;
   int smoothUpdateInterval;
   Completer<void>? _completer;
+  bool isShowDebugSmoothUpdater;
 
   /// Constructs a [RationalProgress].
   ///
@@ -22,11 +21,11 @@ class RationalProgress {
   /// The [uniqueName] can be used for logging and identifying the progress.
   /// The [smoothUpdateInterval] sets how frequently (in milliseconds) the smooth progress update should occur.
   RationalProgress({
+    super.uniqueName,
     required double totalWork,
-    this.uniqueName,
-    this.smoothUpdateInterval = 200, // default value set to 200 milliseconds
-  })  : _totalWork = totalWork,
-        percentageNotifier = ValueNotifier<int>(0);
+    this.smoothUpdateInterval = 50, // default value set to 50 milliseconds
+    this.isShowDebugSmoothUpdater = false,
+  }) : _totalWork = totalWork;
 
   /// Returns the current percentage of work completed.
   double get getCurrentPercentage => _currentPercentage;
@@ -68,7 +67,7 @@ class RationalProgress {
     _smoothUpdateTimer =
         Timer.periodic(Duration(milliseconds: smoothUpdateInterval), (timer) {
       double difference = _targetPercentage - _currentPercentage;
-      if (difference.abs() < 1) {
+      if (difference.abs() < 1 || smoothUpdateInterval == 0) {
         _currentPercentage = _targetPercentage;
         timer.cancel();
         percentageNotifier.value = _currentPercentage.round();
@@ -84,8 +83,10 @@ class RationalProgress {
         }
         _currentPercentage += increment;
         percentageNotifier.value = _currentPercentage.round();
-        printDebugInfo(
-            'RationalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Current Percentage: ${percentageNotifier.value}');
+        if (isShowDebugSmoothUpdater) {
+          printDebugInfo(
+              'RationalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Smoother Percentage: ${percentageNotifier.value}');
+        }
       }
     });
     await _completer?.future;

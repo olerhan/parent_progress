@@ -25,14 +25,6 @@ This package offers a solution for managing and tracking progress across multipl
   - Aggregates progress from multiple child progresses using a weighted system.
   - Provides a comprehensive overview of progress across various components or modules.
 
-## Getting Started
-
-To use this package in your Flutter project, add the following dependency to your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  parent_progress: ^0.0.1
-```
 ## Usage
 
 ### FictionalProgress
@@ -70,18 +62,19 @@ print("Current progress: ${progress.getCurrentPercentage}%");
 FictionalProgress child1 = FictionalProgress([50, 50]);
 FictionalProgress child2 = FictionalProgress([30, 70]);
 
-// List of notifiers and their corresponding weights
-List<ValueNotifier<int>> notifiers = [child1.percentageNotifier, child2.percentageNotifier];
+// List of child and their corresponding weights
+List<ChildProgress> children = [child1, child2];
 List<int> weights = [1, 2];
 
 // Create the parent progress
-ParentProgress parentProgress = ParentProgress(notifiers, weights);
+ParentProgress parentProgress = ParentProgress(children, weights);
 
 // Example to update and retrieve total progress
 child1.finishProgressUpToIndexLevel(processIndexLevel: 0, processingRatePerS: 10, updateIntervalMs: 100);
 child2.finishProgressUpToIndexLevel(processIndexLevel: 1, processingRatePerS: 20, updateIntervalMs: 200);
 print("Total aggregated progress: ${parentProgress.totalPercentageNotifier.value}%");
 ```
+"For a more detailed example, please check the example directory on GitHub."
 
 ## Contributing
 
