@@ -1,3 +1,7 @@
+## 0.2.2
+
+* bug fixed
+
 ## 0.2.1
 
 * null safety

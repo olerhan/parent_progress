@@ -39,7 +39,7 @@ class RationalProgress extends ChildProgress {
     this.isShowDebugSmoothUpdater = false,
   })  : _totalWork = totalWork,
         _smoothUpdateInterval = smoothUpdateInterval {
-    if (_totalWork <= 0 || _currentWork <= 0) {
+    if (_totalWork < 0 || _currentWork < 0) {
       throw ArgumentError('List contains negative values.');
     }
   }
