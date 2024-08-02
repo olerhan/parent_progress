@@ -73,16 +73,11 @@ class RationalProgress extends ChildProgress {
     double? newTotalWork,
   }) async {
     if (newTotalWork != null) _totalWork = newTotalWork;
-    _stopTimer(); // Existing timer is canceled if any
-    _completer?.complete(); // Complete the previous operation
+    if (_totalWork == 0) doneProgress();
     _currentWork = workDone;
-    if (_totalWork != 0) {
-      _targetPercentage = (_currentWork / _totalWork) *
-          100; // Calculates the target percentage based on the current and total work.
-      await _startSmoothUpdate();
-    } else {
-      doneProgress();
-    }
+    _targetPercentage = (_currentWork / _totalWork) *
+        100; // Calculates the target percentage based on the current and total work.
+    if (_timer == null) await _startSmoothUpdate();
   }
 
   /// Initiates or restarts the smooth update mechanism. This process incrementally updates the progress percentage
@@ -129,8 +124,8 @@ class RationalProgress extends ChildProgress {
     _timer = Timer.periodic(Duration(milliseconds: _smoothUpdateInterval), (_) {
       double difference = _targetPercentage - _currentPercentage;
       if (difference.abs() < 1 || _smoothUpdateInterval == 0) {
-        _currentPercentage = _targetPercentage;
         _stopTimer();
+        _currentPercentage = _targetPercentage;
         percentageNotifier.value = _currentPercentage.round();
         printDebugInfo(
             'RationalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Smoother Reached Target Percentage: ${percentageNotifier.value}');
