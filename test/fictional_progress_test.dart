@@ -25,6 +25,18 @@ void main() {
           reason: "Initial percentage should not be 0.");
     });
 
+    test('Complete to index level calculates correctly', () async {
+      final sizes = [10, 20, 30];
+      final progress = FictionalProgress(sizes);
+
+      // Simulate progress up to the first level.
+      progress.completeProgress(upToIndexLevel: 1);
+
+      // Check that the first level is completed and the percentage calculations are correct.
+      expect(progress.getPercentage, 50,
+          reason: "Initial percentage should be 50.");
+    });
+
     test('Reset progress works correctly', () {
       final sizes = [10, 20, 30];
       final progress = FictionalProgress(sizes);

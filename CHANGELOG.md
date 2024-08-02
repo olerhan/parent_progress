@@ -1,3 +1,10 @@
+## 0.2.0
+
+* Added completeProgress method to FictionalProgress class.
+This method allows completing the progress up to and including a specified index level.
+If no index level is specified, the entire progress is completed.
+Includes updating the _targetSize, _processedSize, _percentage, and notifying listeners via percentageNotifier and processedSizeNotifier.
+
 ## 0.1.5
 
 * Added setSmoothUpdateInterval setter in the RationalProgress class.

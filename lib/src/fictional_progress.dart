@@ -107,6 +107,29 @@ class FictionalProgress extends ChildProgress {
     _completer = null;
   }
 
+  /// Completes the progress up to and including the specified index level, setting the percentage accordingly.
+  /// If no index level is specified, completes the entire progress.
+  /// Completes the `finishProgressUpToIndexLevel` future.
+
+  void completeProgress({int? upToIndexLevel}) {
+    _stopTimer(); // Ensure the timer is stopped before setting progress to complete
+    _completer?.complete(); // Complete any pending operations
+    if (upToIndexLevel != null) {
+      _targetSize = 0;
+      for (int i = 0; i <= upToIndexLevel; i++) {
+        _targetSize += _sizes[i];
+      }
+    } else {
+      _targetSize = _totalSize.toDouble();
+    }
+    _processedSize = _targetSize;
+    _percentage = ((_processedSize / _totalSize) * 100).round();
+    percentageNotifier.value = _percentage;
+    processedSizeNotifier.value = _processedSize;
+    printDebugInfo(
+        "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Progress complete.");
+  }
+
   /// Starts the timer to manage smooth progress updates. This method schedules periodic updates
   /// to simulate progress based on the predefined sizes and processing rate.
   void _startTimer() {

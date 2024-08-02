@@ -107,6 +107,7 @@ class RationalProgress extends ChildProgress {
   }
 
   /// Completes the progress at the current work amount, setting the percentage to 100% and ensuring no further updates.
+  /// Completes the `currentWorkDone` future.
   void doneProgress() {
     _stopTimer(); // Ensure the timer is stopped before setting progress to complete
     _completer?.complete(); // Complete any pending operations
