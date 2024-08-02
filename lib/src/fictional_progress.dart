@@ -39,10 +39,14 @@ class FictionalProgress extends ChildProgress {
   /// The [uniqueName] parameter can be used to uniquely identify the instance
   /// for debugging purposes.
   FictionalProgress(
-    this._sizes, {
+    List<int> sizes, {
     super.uniqueName,
     this.isShowDebugPeriodicUpdate = false,
-  }) : processedSizeNotifier = ValueNotifier<double>(0) {
+  })  : _sizes = sizes.isNotEmpty ? sizes : [0],
+        processedSizeNotifier = ValueNotifier<double>(0) {
+    if (_sizes.any((size) => size < 0)) {
+      throw ArgumentError('List contains negative values.');
+    }
     _totalSize = _sizes.reduce((a, b) => a + b);
   }
 
@@ -97,6 +101,7 @@ class FictionalProgress extends ChildProgress {
     this.processingRatePerS = processingRatePerS;
     _updateIntervalMs = updateIntervalMs;
     _targetSize = 0;
+    processIndexLevel = getRealIndex(processIndexLevel);
     for (int i = 0; i <= processIndexLevel; i++) {
       _targetSize += _sizes[i];
     }
@@ -116,6 +121,7 @@ class FictionalProgress extends ChildProgress {
     _completer?.complete(); // Complete any pending operations
     if (upToIndexLevel != null) {
       _targetSize = 0;
+      upToIndexLevel = getRealIndex(upToIndexLevel);
       for (int i = 0; i <= upToIndexLevel; i++) {
         _targetSize += _sizes[i];
       }
@@ -179,6 +185,10 @@ class FictionalProgress extends ChildProgress {
         "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Progress reset to zero");
     if (newSizes != null) {
       _sizes.clear();
+      newSizes = newSizes.isNotEmpty ? newSizes : [0];
+      if (_sizes.any((size) => size < 0)) {
+        throw ArgumentError('List contains negative values.');
+      }
       _sizes.addAll(newSizes);
       _totalSize = _sizes.reduce((a, b) => a + b);
       printDebugInfo(
@@ -186,6 +196,16 @@ class FictionalProgress extends ChildProgress {
     }
     percentageNotifier.value = _percentage;
     processedSizeNotifier.value = _processedSize;
+  }
+
+  int getRealIndex(int index) {
+    if (index < 0) {
+      // Eğer negatif bir indeks verilmişse, gerçek indeksi hesapla
+      return _sizes.length + index;
+    } else {
+      // Eğer pozitif bir indeks verilmişse, direkt olarak onu döndür
+      return index;
+    }
   }
 
   /// Disposes the progress and releases all resources.

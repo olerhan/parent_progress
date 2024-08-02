@@ -1,3 +1,7 @@
+## 0.2.1
+
+* null safety
+
 ## 0.2.0
 
 * Added completeProgress method to FictionalProgress class.

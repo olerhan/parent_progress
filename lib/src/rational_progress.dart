@@ -31,13 +31,18 @@ class RationalProgress extends ChildProgress {
   /// The [totalWork] parameter specifies the total amount of work to be done.
   /// The [uniqueName] can be used for logging and identifying the progress.
   /// The [smoothUpdateInterval] sets how frequently (in milliseconds) the smooth progress update should occur.
+  /// To disable the smooth feature, set [smoothUpdateInterval] to 0.
   RationalProgress({
     super.uniqueName,
     required double totalWork,
     int smoothUpdateInterval = 50, // default value set to 50 milliseconds
     this.isShowDebugSmoothUpdater = false,
   })  : _totalWork = totalWork,
-        _smoothUpdateInterval = smoothUpdateInterval;
+        _smoothUpdateInterval = smoothUpdateInterval {
+    if (_totalWork <= 0 || _currentWork <= 0) {
+      throw ArgumentError('List contains negative values.');
+    }
+  }
 
   /// Returns the current percentage of work completed.
   double get getCurrentPercentage => _currentPercentage;
@@ -71,13 +76,13 @@ class RationalProgress extends ChildProgress {
     _stopTimer(); // Existing timer is canceled if any
     _completer?.complete(); // Complete the previous operation
     _currentWork = workDone;
-    _calculateTargetPercentage();
-    await _startSmoothUpdate();
-  }
-
-  /// Calculates the target percentage based on the current and total work.
-  void _calculateTargetPercentage() {
-    _targetPercentage = (_currentWork / _totalWork) * 100;
+    if (_totalWork != 0) {
+      _targetPercentage = (_currentWork / _totalWork) *
+          100; // Calculates the target percentage based on the current and total work.
+      await _startSmoothUpdate();
+    } else {
+      doneProgress();
+    }
   }
 
   /// Initiates or restarts the smooth update mechanism. This process incrementally updates the progress percentage
