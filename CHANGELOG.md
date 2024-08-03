@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Added addSlice and deleteSlice functionality to ParentProgress and removed the Slices list. Improved the algorithm.
+
 ## 0.2.3
 
 * In the RationalProgress class, the currentWorkDone method has been updated to improve race conditions.
