@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parent_progress/parent_progress.dart';
-import 'package:parent_progress/src/child_progress.dart';
 
 void main() {
   group('ParentProgress Tests', () {
