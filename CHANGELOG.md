@@ -1,3 +1,7 @@
+## 0.3.1
+
+* bug fixed
+
 ## 0.3.0
 
 * Added addSlice and deleteSlice functionality to ParentProgress and removed the Slices list. Improved the algorithm.

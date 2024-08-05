@@ -101,7 +101,7 @@ class FictionalProgress extends ChildProgress {
     this.processingRatePerS = processingRatePerS;
     _updateIntervalMs = updateIntervalMs;
     _targetSize = 0;
-    processIndexLevel = getRealIndex(processIndexLevel);
+    processIndexLevel = _getRealIndex(processIndexLevel);
     for (int i = 0; i <= processIndexLevel; i++) {
       _targetSize += _sizes[i];
     }
@@ -121,7 +121,7 @@ class FictionalProgress extends ChildProgress {
     _completer?.complete(); // Complete any pending operations
     if (upToIndexLevel != null) {
       _targetSize = 0;
-      upToIndexLevel = getRealIndex(upToIndexLevel);
+      upToIndexLevel = _getRealIndex(upToIndexLevel);
       for (int i = 0; i <= upToIndexLevel; i++) {
         _targetSize += _sizes[i];
       }
@@ -198,7 +198,7 @@ class FictionalProgress extends ChildProgress {
     processedSizeNotifier.value = _processedSize;
   }
 
-  int getRealIndex(int index) {
+  int _getRealIndex(int index) {
     if (index < 0) {
       // Eğer negatif bir indeks verilmişse, gerçek indeksi hesapla
       return _sizes.length + index;
