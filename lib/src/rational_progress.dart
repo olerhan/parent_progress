@@ -73,7 +73,10 @@ class RationalProgress extends ChildProgress {
     double? newTotalWork,
   }) async {
     if (newTotalWork != null) _totalWork = newTotalWork;
-    if (_totalWork == 0) doneProgress();
+    if (_totalWork == 0) {
+      doneProgress();
+      return;
+    }
     _currentWork = workDone;
     _targetPercentage = (_currentWork / _totalWork) *
         100; // Calculates the target percentage based on the current and total work.

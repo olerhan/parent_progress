@@ -1,3 +1,7 @@
+## 0.3.3
+
+* bug fixed on rational progress
+
 ## 0.3.2
 
 * bug fixed
