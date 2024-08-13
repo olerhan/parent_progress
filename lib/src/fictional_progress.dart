@@ -96,8 +96,9 @@ class FictionalProgress extends ChildProgress {
     required int updateIntervalMs,
   }) async {
     _stopTimer(); // Cancel the previous timer
-    if (!_completer.isCompleted)
+    if (!_completer.isCompleted) {
       _completer.complete(); // Complete the previous operation
+    }
     _completer = Completer<void>();
     this.processingRatePerS = processingRatePerS;
     _updateIntervalMs = updateIntervalMs;
