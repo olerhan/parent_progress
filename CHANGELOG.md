@@ -1,3 +1,7 @@
+## 0.3.4
+
+* improved race conditions
+
 ## 0.3.3
 
 * bug fixed on rational progress

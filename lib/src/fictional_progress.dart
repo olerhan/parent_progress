@@ -23,7 +23,7 @@ class FictionalProgress extends ChildProgress {
   Timer? _timer;
   double _processedSize = 0.0;
   ValueNotifier<double> processedSizeNotifier;
-  Completer<void>? _completer;
+  Completer<void> _completer = Completer<void>();
   late double processingRatePerS;
   late int _updateIntervalMs;
   late double _targetSize;
@@ -96,7 +96,8 @@ class FictionalProgress extends ChildProgress {
     required int updateIntervalMs,
   }) async {
     _stopTimer(); // Cancel the previous timer
-    _completer?.complete(); // Complete the previous operation
+    if (!_completer.isCompleted)
+      _completer.complete(); // Complete the previous operation
     _completer = Completer<void>();
     this.processingRatePerS = processingRatePerS;
     _updateIntervalMs = updateIntervalMs;
@@ -108,8 +109,7 @@ class FictionalProgress extends ChildProgress {
     printDebugInfo(
         "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Start method started with : $_percentage");
     _startTimer();
-    await _completer?.future;
-    _completer = null;
+    await _completer.future;
   }
 
   /// Completes the progress up to and including the specified index level, setting the percentage accordingly.
@@ -118,7 +118,7 @@ class FictionalProgress extends ChildProgress {
 
   void completeProgress({int? upToIndexLevel}) {
     _stopTimer(); // Ensure the timer is stopped before setting progress to complete
-    _completer?.complete(); // Complete any pending operations
+    if (!_completer.isCompleted) _completer.complete();
     if (upToIndexLevel != null) {
       _targetSize = 0;
       upToIndexLevel = _getRealIndex(upToIndexLevel);
@@ -156,7 +156,7 @@ class FictionalProgress extends ChildProgress {
         printDebugInfo(
             "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Level Finished and percentage reached: $_percentage");
         _stopTimer();
-        _completer?.complete();
+        if (!_completer.isCompleted) _completer.complete();
       }
     });
   }
@@ -178,7 +178,7 @@ class FictionalProgress extends ChildProgress {
   /// This method effectively restarts the simulation from scratch.
   void resetProgress({List<int>? newSizes}) {
     _stopTimer(); // Cancel the previous timer
-    _completer?.complete();
+    if (!_completer.isCompleted) _completer.complete();
     _percentage = 0;
     _processedSize = 0.0;
     printDebugInfo(
@@ -211,7 +211,7 @@ class FictionalProgress extends ChildProgress {
   /// Disposes the progress and releases all resources.
   void dispose() {
     _stopTimer();
-    _completer?.complete();
+    if (!_completer.isCompleted) _completer.complete();
     percentageNotifier.dispose();
     processedSizeNotifier.dispose();
     printDebugInfo(
