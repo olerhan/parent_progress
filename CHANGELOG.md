@@ -1,3 +1,7 @@
+## 0.3.5
+
+* added braces for clean code
+
 ## 0.3.4
 
 * improved race conditions

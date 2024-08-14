@@ -119,7 +119,9 @@ class FictionalProgress extends ChildProgress {
 
   void completeProgress({int? upToIndexLevel}) {
     _stopTimer(); // Ensure the timer is stopped before setting progress to complete
-    if (!_completer.isCompleted) _completer.complete();
+    if (!_completer.isCompleted) {
+      _completer.complete();
+    }
     if (upToIndexLevel != null) {
       _targetSize = 0;
       upToIndexLevel = _getRealIndex(upToIndexLevel);
@@ -157,7 +159,9 @@ class FictionalProgress extends ChildProgress {
         printDebugInfo(
             "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Level Finished and percentage reached: $_percentage");
         _stopTimer();
-        if (!_completer.isCompleted) _completer.complete();
+        if (!_completer.isCompleted) {
+          _completer.complete();
+        }
       }
     });
   }
@@ -179,7 +183,9 @@ class FictionalProgress extends ChildProgress {
   /// This method effectively restarts the simulation from scratch.
   void resetProgress({List<int>? newSizes}) {
     _stopTimer(); // Cancel the previous timer
-    if (!_completer.isCompleted) _completer.complete();
+    if (!_completer.isCompleted) {
+      _completer.complete();
+    }
     _percentage = 0;
     _processedSize = 0.0;
     printDebugInfo(
@@ -212,7 +218,9 @@ class FictionalProgress extends ChildProgress {
   /// Disposes the progress and releases all resources.
   void dispose() {
     _stopTimer();
-    if (!_completer.isCompleted) _completer.complete();
+    if (!_completer.isCompleted) {
+      _completer.complete();
+    }
     percentageNotifier.dispose();
     processedSizeNotifier.dispose();
     printDebugInfo(
