@@ -1,3 +1,7 @@
+## 0.3.6
+
+* getTargetPercentage, getCurrentPercentage getters converted to int
+
 ## 0.3.5
 
 * added braces for clean code

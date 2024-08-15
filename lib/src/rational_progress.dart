@@ -45,10 +45,10 @@ class RationalProgress extends ChildProgress {
   }
 
   /// Returns the current percentage of work completed.
-  double get getCurrentPercentage => _currentPercentage;
+  int get getCurrentPercentage => _currentPercentage.round();
 
   /// Returns the target percentage calculated from the current work done.
-  double get getTargetPercentage => _targetPercentage;
+  int get getTargetPercentage => _targetPercentage.round();
 
   /// Returns the amount of work completed so far.
   double get getCurrentWork => _currentWork;
