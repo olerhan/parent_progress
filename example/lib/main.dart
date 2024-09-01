@@ -146,7 +146,8 @@ class FictionalProgressDemo extends StatefulWidget {
 class _FictionalProgressDemoState extends State<FictionalProgressDemo> {
   late FictionalProgress fictionalProgress;
 
-  double _processingRatePerS = 5.0; // Amount processed per second, adjustable.
+  double _processingLenghtPerS =
+      5.0; // Amount processed per second, adjustable.
   int _updateIntervalMs = 50; // Update interval in milliseconds, adjustable.
 
   @override
@@ -163,7 +164,7 @@ class _FictionalProgressDemoState extends State<FictionalProgressDemo> {
   void startProgressSimulation(int index) {
     fictionalProgress.finishProgressUpToIndexLevel(
       processIndexLevel: index,
-      processingRatePerS: _processingRatePerS,
+      processingLenghtPerS: _processingLenghtPerS,
       updateIntervalMs: _updateIntervalMs,
     );
   }
@@ -200,12 +201,12 @@ class _FictionalProgressDemoState extends State<FictionalProgressDemo> {
           min: 1,
           max: 10,
           divisions: 9,
-          label: 'Processing rate: $_processingRatePerS units/s',
-          value: _processingRatePerS,
+          label: 'Processing rate: $_processingLenghtPerS units/s',
+          value: _processingLenghtPerS,
           onChanged: (double value) {
             setState(() {
-              fictionalProgress.processingRatePerS = value;
-              _processingRatePerS = value;
+              fictionalProgress.processingLenghtPerS = value;
+              _processingLenghtPerS = value;
             });
           },
           inactiveColor: Colors.greenAccent.withOpacity(0.1),
@@ -234,7 +235,7 @@ class _FictionalProgressDemoState extends State<FictionalProgressDemo> {
                     'Step size: ${fictionalProgress.getSizes[index]} units'),
                 onTap: () => fictionalProgress.finishProgressUpToIndexLevel(
                   processIndexLevel: index,
-                  processingRatePerS: _processingRatePerS,
+                  processingLenghtPerS: _processingLenghtPerS,
                   updateIntervalMs: _updateIntervalMs,
                 ),
               );

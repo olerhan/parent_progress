@@ -24,7 +24,7 @@ class FictionalProgress extends ChildProgress {
   double _processedSize = 0.0;
   ValueNotifier<double> processedSizeNotifier;
   Completer<void> _completer = Completer<void>();
-  late double processingRatePerS;
+  late double processingLenghtPerS;
   late int _updateIntervalMs;
   late double _targetSize;
   bool isShowDebugPeriodicUpdate;
@@ -87,12 +87,12 @@ class FictionalProgress extends ChildProgress {
   /// Simulates finishing the progress up to a certain process index level.
   ///
   /// The [processIndexLevel] parameter indicates the target process level.
-  /// The [processingRatePerS] parameter defines the rate of processing per second,
+  /// The [processingLenghtPerS] parameter defines the lenght of processing per second,
   /// which is a simulated rate of data processing or task completion.
   /// The [updateIntervalMs] parameter specifies the update interval in milliseconds.
   Future<void> finishProgressUpToIndexLevel({
     required int processIndexLevel,
-    required double processingRatePerS,
+    required double processingLenghtPerS,
     required int updateIntervalMs,
   }) async {
     _stopTimer(); // Cancel the previous timer
@@ -100,7 +100,7 @@ class FictionalProgress extends ChildProgress {
       _completer.complete(); // Complete the previous operation
     }
     _completer = Completer<void>();
-    this.processingRatePerS = processingRatePerS;
+    this.processingLenghtPerS = processingLenghtPerS;
     _updateIntervalMs = updateIntervalMs;
     _targetSize = 0;
     processIndexLevel = _getRealIndex(processIndexLevel);
@@ -144,7 +144,7 @@ class FictionalProgress extends ChildProgress {
   void _startTimer() {
     _timer = Timer.periodic(Duration(milliseconds: _updateIntervalMs), (timer) {
       if (_processedSize < _targetSize) {
-        _processedSize += processingRatePerS * (_updateIntervalMs / 1000);
+        _processedSize += processingLenghtPerS * (_updateIntervalMs / 1000);
         if (_processedSize > _targetSize) {
           _processedSize = _targetSize;
         }

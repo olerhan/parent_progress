@@ -37,7 +37,7 @@ FictionalProgress progress = FictionalProgress(sizes);
 // Start the simulation of progress
 progress.finishProgressUpToIndexLevel(
     processIndexLevel: 1, 
-    processingRatePerS: 5, 
+    processingLenghtPerS: 5, 
     updateIntervalMs: 100);
 ```
 
@@ -70,7 +70,7 @@ List<int> weights = [1, 2];
 ParentProgress parentProgress = ParentProgress(children, weights);
 
 // Example to update and retrieve total progress
-child1.finishProgressUpToIndexLevel(processIndexLevel: 0, processingRatePerS: 10, updateIntervalMs: 100);
+child1.finishProgressUpToIndexLevel(processIndexLevel: 0, processingLenghtPerS: 10, updateIntervalMs: 100);
 child2.currentWorkDone(100);
 print("Total aggregated progress: ${parentProgress.percentageNotifier.value}%");
 ```

@@ -18,7 +18,9 @@ void main() {
 
       // Simulate progress up to the first level.
       await progress.finishProgressUpToIndexLevel(
-          processIndexLevel: 0, processingRatePerS: 10, updateIntervalMs: 1000);
+          processIndexLevel: 0,
+          processingLenghtPerS: 10,
+          updateIntervalMs: 1000);
 
       // Check that the first level is completed and the percentage calculations are correct.
       expect(progress.getPercentage, isNot(0),
