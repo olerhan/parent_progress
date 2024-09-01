@@ -16,6 +16,10 @@ void main() {
 
       // After updating the work to 50, the current progress should reflect 50% completion.
       expect(progress.getCurrentPercentage, 50);
+
+      await progress.currentWorkDone(120);
+      expect(progress.getCurrentPercentage, isNot(120),
+          reason: "Initial percentage should not be 120.");
     });
 
     test('Reset works correctly', () async {

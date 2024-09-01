@@ -1,3 +1,9 @@
+## 0.3.9
+
+* bug fixed getCurrentProcessIndexLevel in fictional_progress
+* bug fixed updateToProcessedTotalSize in fictional_progress
+* bug fixed currentWorkDone in rational_progress
+
 ## 0.3.8
 
 * updateToProcessedTotalSize added to FictionalProgress.

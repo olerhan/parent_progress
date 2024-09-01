@@ -77,6 +77,9 @@ class RationalProgress extends ChildProgress {
       doneProgress();
       return;
     }
+    if (workDone > _totalWork) {
+      workDone = _totalWork;
+    }
     _currentWork = workDone;
     _targetPercentage = (_currentWork / _totalWork) *
         100; // Calculates the target percentage based on the current and total work.

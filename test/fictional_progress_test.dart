@@ -72,6 +72,9 @@ void main() {
       progress.updateToProcessedTotalSize(60);
       await progress.waitFinishProgressUpToIndexLevel();
       expect(progress.getPercentage, 60, reason: "Percentage should be 60.");
+      progress.updateToProcessedTotalSize(120);
+      expect(progress.getPercentage, isNot(120),
+          reason: "Initial percentage should not be 120.");
     });
   });
 }

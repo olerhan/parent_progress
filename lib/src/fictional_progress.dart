@@ -76,9 +76,13 @@ class FictionalProgress extends ChildProgress {
   /// Each index corresponds to a segment in the [sizes] list, and moving to the next
   /// index means that segment has been fully simulated.
   int get getCurrentProcessIndexLevel {
+    int size = 0;
     for (int i = 0; i < _sizes.length; i++) {
-      if (_processedSize >= _sizes[i]) {
+      size += _sizes[i];
+      if (_processedSize < size) {
         return i - 1;
+      } else if (_processedSize == size) {
+        return i;
       }
     }
     return -1; // Returns -1 if all elements are smaller than processedSize
@@ -147,6 +151,10 @@ class FictionalProgress extends ChildProgress {
     if (_timer != null && _timer!.isActive && newProcessedSize < _targetSize) {
       _processedSize = newProcessedSize;
     } else {
+      // _timer will stop and close because it won't run when newProcessedSize > _targetSize.
+      if (newProcessedSize > _totalSize) {
+        newProcessedSize = _totalSize.toDouble();
+      } // to prevent errors.
       _targetSize = newProcessedSize;
       _processedSize = _targetSize;
       _percentage = ((_processedSize / _totalSize) * 100).round();
