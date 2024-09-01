@@ -108,8 +108,12 @@ class FictionalProgress extends ChildProgress {
       _targetSize += _sizes[i];
     }
     printDebugInfo(
-        "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Start method started with : $_percentage");
+        "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}finishProgressUpToIndexLevel started with : $_percentage");
     _startTimer();
+    await _completer.future;
+  }
+
+  Future<void> waitFinishProgressUpToIndexLevel() async {
     await _completer.future;
   }
 
@@ -139,6 +143,18 @@ class FictionalProgress extends ChildProgress {
         "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Progress complete.");
   }
 
+  void updateToProcessedTotalSize(double newProcessedSize) {
+    if (_timer != null && _timer!.isActive && newProcessedSize < _targetSize) {
+      _processedSize = newProcessedSize;
+    } else {
+      _targetSize = newProcessedSize;
+      _processedSize = _targetSize;
+      _percentage = ((_processedSize / _totalSize) * 100).round();
+      percentageNotifier.value = _percentage;
+      processedSizeNotifier.value = _processedSize;
+    }
+  }
+
   /// Starts the timer to manage smooth progress updates. This method schedules periodic updates
   /// to simulate progress based on the predefined sizes and processing rate.
   void _startTimer() {
@@ -157,7 +173,7 @@ class FictionalProgress extends ChildProgress {
         }
       } else {
         printDebugInfo(
-            "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Level Finished and percentage reached: $_percentage");
+            "FictionalProgress ${uniqueName != null ? '${uniqueName!}: ' : ''}Target Finished and percentage reached: $_percentage");
         _stopTimer();
         if (!_completer.isCompleted) {
           _completer.complete();

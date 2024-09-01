@@ -1,6 +1,6 @@
 name: parent_progress
 description: "This package offers a solution for managing and tracking progress across multiple tasks with three main classes: FictionalProgress, RationalProgress, and ParentProgress."
-version: 0.3.7
+version: 0.3.8
 homepage: https://clipspace.app/
 repository: https://github.com/olerhan/parent_progress.git
 issue_tracker: https://github.com/olerhan/parent_progress/issues

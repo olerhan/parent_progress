@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parent_progress/parent_progress.dart';
 
@@ -47,6 +48,30 @@ void main() {
       progress.resetProgress();
       expect(progress.getPercentage, 0,
           reason: "Initial percentage should be 0.");
+    });
+
+    test('updateToProcessedTotalSize calculates correctly', () async {
+      final sizes = [20, 30, 50];
+      final progress = FictionalProgress(sizes);
+
+      // Simulate progress up to the first level.
+      progress.finishProgressUpToIndexLevel(
+          processIndexLevel: 0,
+          processingLenghtPerS: 10,
+          updateIntervalMs: 1000);
+      Future.delayed(Durations.short1);
+      progress.updateToProcessedTotalSize(10);
+      await progress.waitFinishProgressUpToIndexLevel();
+      expect(progress.getPercentage, sizes[0],
+          reason: "Percentage should be ${sizes[0]}.");
+      progress.finishProgressUpToIndexLevel(
+          processIndexLevel: 1,
+          processingLenghtPerS: 10,
+          updateIntervalMs: 1000);
+      Future.delayed(Durations.short1);
+      progress.updateToProcessedTotalSize(60);
+      await progress.waitFinishProgressUpToIndexLevel();
+      expect(progress.getPercentage, 60, reason: "Percentage should be 60.");
     });
   });
 }

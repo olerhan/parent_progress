@@ -1,3 +1,7 @@
+## 0.3.8
+
+* updateToProcessedTotalSize added to FictionalProgress.
+
 ## 0.3.7
 
 * Changed processingRatePerS Name in Fictional Progress as processingLenghtPerS
