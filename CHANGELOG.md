@@ -1,3 +1,7 @@
+## 0.4.0
+
+* bug fixed fictional_progress
+
 ## 0.3.9
 
 * bug fixed getCurrentProcessIndexLevel in fictional_progress
