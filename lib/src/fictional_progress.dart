@@ -140,10 +140,12 @@ class FictionalProgress extends ChildProgress {
       _targetSize = _totalSize.toDouble();
     }
     _processedSize = _targetSize;
-    _percentage =
-        ((_processedSize / (_totalSize == 0 ? _processedSize : _totalSize)) *
-                100)
-            .round();
+    if (_totalSize == 0) {
+      _percentage = 100;
+    } else {
+      _percentage = ((_processedSize / (_totalSize)) * 100).round();
+    }
+
     percentageNotifier.value = _percentage;
     processedSizeNotifier.value = _processedSize;
     printDebugInfo(
